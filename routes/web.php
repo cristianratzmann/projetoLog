@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', 'IndexController@index');
-Route::get('/contato', 'ContatoController@index');
-Route::get('/contato/rh', 'ContatoController@rh');
+//Route::get('/', 'IndexController@index');
+//Route::get('/contato', 'ContatoController@index');
+//Route::get('/contato/rh', 'ContatoController@rh');
+Route::get('/', 'HomeController@index');
+Route::get('/product', 'ProductController@index');
+Route::get('/about', 'AboutController@index');
+

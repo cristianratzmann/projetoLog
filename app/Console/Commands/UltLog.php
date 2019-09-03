@@ -6,21 +6,22 @@ use Illuminate\Console\Command;
 use App\Util\LogConsulta;
 
 
-class VerData extends Command
+
+class UltLog extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:verdata {formato? : Formato da data}';
+    protected $signature = 'app:ultlog {formato? : Formato da data}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Possibilita ver a data atual da aplicação';
+    protected $description = 'Possibilita ver o último Log gerado';
 
     /**
      * Create a new command instance.
@@ -41,7 +42,7 @@ class VerData extends Command
     {   
         $caminho = 'storage/app';
         $log = new LogConsulta($caminho, 'home');
-        $data = $log->registrar();
+        $data = $log->ultLog();
         $this->info($data);
     }
 }

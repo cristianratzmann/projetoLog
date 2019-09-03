@@ -4,43 +4,49 @@ namespace App\Util;
 
 class LogConsulta {
 
-    private $caminho;
+    public $caminho;
+    public $page;
     
-    public function __construct($caminho) {
+    public function __construct($caminho, $page) {
         $this->caminho = $caminho;
+        $this->page = $page;
     }
     
-    public function registrar($formato = 'n') {
+    public function registrar() {
         
-        if ($formato == 'n') {
             $data = date('d/m/Y H:i');
-        } else if ($formato == 't') {
-            $data = time();
-        } else {
-            $data ="Parâmetro inválido";
-        }
-        
-        
+            $ip = $_SERVER["REMOTE_ADDR"];
+            $pagina = $this->page;
+
         if (file_exists($this->caminho.'/log_geral.txt')) {
             $dadosAtuais = $this->capturar();
-            $dadosAtuais .= "\n".$data;
+            $dadosAtuais .= "\n".'Página: '.$pagina.' | '.'Data: '.$data.' | '.'Ip: '.$ip.";";
             $this->gravarArquivo($dadosAtuais);
         } else {
-            $this->gravarArquivo($data);
+            $dadosAtuais =  'Página: '.$pagina.' | '.'Data: '.$data.' | '.'Ip: '.$ip.";";
+            $this->gravarArquivo($dadosAtuais);
         }
         
-        return $data;
+        return $dadosAtuais;
         
     }
     
-    private function gravarArquivo($data) {
+    private function gravarArquivo($log) {
         file_put_contents
-            ($this->caminho.'/log_geral.txt', $data);
+            ($this->caminho.'/log_geral.txt', $log);
     }
     
     public function capturar() {
         $dados = file_get_contents($this->caminho.'/log_geral.txt');
         return $dados;
+    }
+
+    public function ultLog() {
+        $dados = file_get_contents($this->caminho.'/log_geral.txt');
+        $dados = explode(';', $dados);
+        $dados = array_reverse($dados);
+
+        return $dados[1];
     }
     
 }
